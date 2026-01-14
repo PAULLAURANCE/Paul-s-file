@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>开发者后台</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>开发者管理中心 ({{ dev.dev_name }})</h1>
+        <div style="background: var(--accent); color: white; padding: 20px; border-radius: 15px;">
+            <p>账户总收益：¥ {{ dev.balance }}</p>
+        </div>
+
+        <h2 style="margin-top: 40px;">我发布的商品</h2>
+        <div class="grid">
+            {% for g in games %}
+            <div class="card">
+                <h3>{{ g.game_name }}</h3>
+                <p>已售: {{ g.sold_count }}</p>
+                <button class="btn">编辑</button>
+            </div>
+            {% endfor %}
+            <div class="card" style="border: 2px dashed #ccc; background: none; box-shadow: none;">
+                <p>+ 上架新游戏</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

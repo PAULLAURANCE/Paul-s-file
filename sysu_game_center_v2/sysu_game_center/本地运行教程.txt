@@ -1,0 +1,14 @@
+第一步：
+在navicat中选择一个连接，点击运行sql文件，然后运行database.sql，刷新一下看看sysu_game_center是否创建成功
+
+第二步：
+打开app.py，将“你的账户名”、“你的密码”修改成自己的mysql账户名和密码（必须要和第一步中选择的连接所用的mysql账户对应，且该账户须有root权限）
+
+第三步：
+打开sysu_game_center文件夹，右键空白处然后点击在终端中运行
+先输入pip install flask flask-sqlalchemy flask-login pymysql cryptography，回车运行
+再输入python app.py，回车运行，注意终端不要关闭，关掉后网站就断开连接了
+
+第四步：
+打开浏览器，输入127.0.0.1:5001。登陆的账号和密码在database.sql文件的末尾
+

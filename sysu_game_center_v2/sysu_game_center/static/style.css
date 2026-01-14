@@ -1,0 +1,125 @@
+/* 引入酷炫字体 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500;700&display=swap');
+
+:root {
+    --bg-dark: #0a0a0c;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --accent: #00d2ff;       /* 电讯蓝 */
+    --accent-glow: #3a7bd5;  /* 霓虹蓝 */
+    --text-main: #ffffff;
+    --text-dim: #a0a0a0;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #0a0a0c 100%);
+    color: var(--text-main);
+    min-height: 100vh;
+}
+
+/* 导航栏高斯模糊 */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10%;
+    background: rgba(10, 10, 12, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav h2 { font-family: 'Orbitron', sans-serif; letter-spacing: 2px; color: var(--accent); }
+
+nav a {
+    text-decoration: none;
+    color: var(--text-dim);
+    margin-left: 25px;
+    font-size: 0.9em;
+    transition: 0.3s;
+}
+
+nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); }
+
+/* 容器 */
+.container { padding: 40px 10%; animation: pageSlideIn 1s ease-out; }
+
+/* 游戏卡片：未来感卡片 */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-12px) scale(1.02);
+    border-color: var(--accent);
+    box-shadow: 0 10px 40px rgba(0, 210, 255, 0.2);
+}
+
+/* 解决图片显示问题：利用随机占位图 */
+.game-image {
+    width: 100%;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* 黑色渐变层：文字更好看 */
+.game-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0; width: 100%; height: 50%;
+    background: linear-gradient(transparent, rgba(10,10,12,0.9));
+}
+
+.card-content { padding: 20px; }
+.card h3 { margin: 0 0 10px 0; font-size: 1.2em; font-family: 'Orbitron', sans-serif; }
+.card p { color: var(--text-dim); font-size: 0.9em; margin-bottom: 20px; }
+
+/* 按钮改为渐变酷炫风格 */
+.btn {
+    padding: 12px 30px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.btn:hover {
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    filter: brightness(1.1);
+}
+
+/* 进场动画 */
+@keyframes pageSlideIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 闪烁呼吸灯特效 */
+.glow-effect {
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(0,210,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ game.game_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- 顶部全宽海报 -->
+    <div style="height: 400px; background: linear-gradient(to bottom, transparent, var(--bg-dark)), url('https://picsum.photos/seed/{{ game.game_id }}/1200/600') center/cover;"></div>
+
+    <div class="container" style="max-width: 900px; margin: -100px auto 0 auto; position: relative;">
+        <a href="/" style="color: var(--text-dim); text-decoration: none;"><- 返回商城</a>
+        <h1 style="font-size: 4em; font-family: 'Orbitron'; margin: 20px 0; text-shadow: 0 0 20px rgba(0,210,255,0.5);">{{ game.game_name }}</h1>
+
+        <!-- 购买区域 -->
+        <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <span style="color: var(--text-dim);">当前售价</span>
+                <p style="font-size: 2.5em; font-weight: bold; margin: 5px 0; color: var(--accent);">¥ {{ game.price }}</p>
+            </div>
+            {% if is_owned %}
+                <button class="btn" style="background: #27ae60; cursor: default;">已经在游戏库中</button>
+            {% else %}
+                <a href="/buy/Game/{{ game.game_id }}" class="btn">立即斩获</a>
+                {% if is_wished %}
+                    <button class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--accent); color: var(--accent); cursor: default;">已在愿望单</button>
+                {% else %}
+                    <a href="/wishlist/add/{{ game.game_id }}" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid white;">+ 愿望单</a>
+                {% endif %}
+            {% endif %}
+        </div>
+
+
+        <!-- 评分展示部分 -->
+        <div style="margin-top: 30px; display: flex; align-items: center; gap: 20px;">
+            <div style="background: rgba(0,210,255,0.1); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--accent);">
+                <span style="color: var(--accent); font-weight: bold; font-family: 'Orbitron';">AVG RATING: {{ avg_score }} / 10</span>
+            </div>
+            <!-- 只有拥有游戏的玩家才能看到评分表单 -->
+            {% if is_owned %}
+            <form action="/rate/{{ game.game_id }}" method="POST" style="display: flex; align-items: center; gap: 10px;">
+                <span style="color: var(--text-dim); font-size: 0.9em;">评价本款游戏：</span>
+                <select name="score" style="background: #1a1a2e; color: white; border: 1px solid var(--accent); padding: 5px; border-radius: 5px;">
+                    {% for i in range(11) %}<option value="{{ i }}">{{ i }}分</option>{% endfor %}
+                </select>
+                <button type="submit" class="btn" style="padding: 5px 15px; font-size: 0.8em;">提交</button>
+            </form>
+            {% endif %}
+        </div>
+
+        <!-- DLC 部分 -->
+        <h3 style="margin-top: 60px; font-family: 'Orbitron'; border-left: 4px solid var(--accent); padding-left: 15px;">追加内容 (DLC)</h3>
+        {% for d in dlcs %}
+            <div style="padding: 20px; background: var(--card-bg); border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); margin-top: 15px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.05)'">
+                <span style="font-weight: 500;">{{ d.dlc_name }}</span>
+                <a href="/buy/DLC/{{ d.dlc_id }}" class="btn" style="padding: 8px 20px; font-size: 0.8em; background: rgba(255,255,255,0.1);">¥{{ d.price }} 购买</a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>身份识别 - SYSUE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="display: flex; align-items: center; justify-content: center;">
+    <div style="width: 100%; max-width: 450px; background: rgba(255,255,255,0.03); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+        <h1 style="font-family: 'Orbitron'; text-align: center; color: var(--accent);">IDENTITY</h1>
+        <p style="text-align: center; color: var(--text-dim); margin-bottom: 40px;">请登录以接入游戏中心系统</p>
+        
+        <form method="POST">
+            <div style="margin-bottom: 20px;">
+                <input type="email" name="email" placeholder="邮箱" required style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; color: white; outline: none;">
+            </div>
+            <div style="margin-bottom: 30px;">
+                <input type="password" name="password" placeholder="密码" required style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; color: white; outline: none;">
+            </div>
+            <button type="submit" class="btn" style="width: 100%; font-size: 1.1em;">验证身份</button>
+        </form>
+        <p style="text-align: center; margin-top: 30px; font-size: 0.9em; color: var(--text-dim);">尚未接入系统? <a href="/register" style="color: var(--accent); text-decoration: none;">注册新序列</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的库 - SYSUE-GAME</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <h2>MY COLLECTION</h2>
+        <a href="/" style="color: var(--accent);"><- 返回商店</a>
+    </nav>
+    <div class="container">
+        <!-- 这里去掉了 background: white，改用 var(--card-bg) -->
+        <div style="background: var(--card-bg); padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; backdrop-filter: blur(10px);">
+            <h3 style="color: var(--accent); margin-top: 0; font-family: 'Orbitron';">COMMANDER PROFILE</h3>
+            <p style="font-size: 1.1em;">昵称：<span style="color: white;">{{ current_user.nickname }}</span></p>
+            <p style="font-size: 1.1em;">账户余额：<span style="color: #2ecc71;">¥ {{ current_user.balance }}</span></p>
+        </div>
+
+        <h2 style="font-family: 'Orbitron'; letter-spacing: 2px;">我的游戏资产</h2>
+        <div class="grid">
+            {% for g in games %}
+            <div class="card">
+                <div class="game-image" style="background-image: url('https://picsum.photos/seed/{{ g.game_id }}/400/250'); height: 120px;"></div>
+                <div class="card-content">
+                    <h3>{{ g.game_name }}</h3>
+                    <button class="btn" style="width: 100%;" onclick="alert('正在启动：{{ g.game_name }}...')">启动游戏</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2 style="font-family: 'Orbitron'; letter-spacing: 2px; margin-top: 60px; color: var(--accent);">我的愿望单 (WISH LIST)</h2>
+        <div class="grid">
+            {% for w_game in wished_games %}
+            <div class="card" style="opacity: 0.8; border-style: dashed;">
+                <div class="game-image" style="background-image: url('https://picsum.photos/seed/{{ w_game.game_id }}/400/250'); height: 100px;"></div>
+                <div class="card-content" style="padding: 15px;">
+                    <h4 style="margin: 0;">{{ w_game.game_name }}</h4>
+                    <p style="margin: 5px 0;">¥ {{ w_game.price }}</p>
+                    <div style="display: flex; gap: 5px;">
+                        <a href="/game/{{ w_game.game_id }}" class="btn" style="padding: 5px 10px; font-size: 10px;">去购买</a>
+                        <a href="/wishlist/remove/{{ w_game.game_id }}" class="btn" style="padding: 5px 10px; font-size: 10px; background: #e74c3c;">移除</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <p style="color: var(--text-dim);">愿望单空空如也...</p>
+            {% endfor %}
+        </div>
+
+        <h2 style="font-family: 'Orbitron'; letter-spacing: 2px; margin-top: 60px; color: #f1c40f;">社交中心 (FRIENDS)</h2>
+        <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);">
+            <!-- 添加好友表单 -->
+            <form action="/add_friend" method="POST" style="margin-bottom: 30px; display: flex; gap: 10px;">
+                <input type="email" name="email" placeholder="输入对方邮箱添加好友..." required style="flex-grow: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; color: white;">
+                <button type="submit" class="btn" style="background: #f1c40f; color: black;">发送申请</button>
+            </form>
+
+            <!-- 好友列表 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                {% for f in friends %}
+                <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-weight: bold;">{{ f.name }}</div>
+                        <div style="font-size: 0.8em; color: var(--text-dim);">{{ f.email }}</div>
+                    </div>
+                    <a href="/remove_friend/{{ f.rel_id }}" style="color: #e74c3c; text-decoration: none; font-weight: bold;">×</a>
+                </div>
+                {% else %}
+                    <p style="color: var(--text-dim);">你还没有添加任何好友...</p>
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html>
